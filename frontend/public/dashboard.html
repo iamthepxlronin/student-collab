@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-    <head lang="en-US">
+<html lang="en-US">
+    <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>CollabSpace — Find Your Team</title>
@@ -9,29 +9,99 @@
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <linK rel="stylesheet" href="../../styles/tailwind.css">
+        <link rel="stylesheet" href="../../styles/tailwind.css">
     </head>
-    <body class="min-h-screen font-sans bg-paper text-ink overflow-x-hidden relative">
-        <!-- BG DECO -->
-        <div class="absolute inset-0 dot-grid opacity-40 pointer-events-none"></div>
-        <div class="absolute -top-32 right-0 w-[500px] h-[500px] rounded-full bg-coral blur-[100px] opacity-15 pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-[450px] h-[450px] rounded-full bg-sage blur-[100px] opacity-15 pointer-events-none"></div>
-
-        <!-- NAVBAR -->
-        <div class="lg:pl-64 pt-14 lg:pt-0 relative z-10">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <!-- Header -->
-                <div class="mb-10">
-                    <h1 class="font-serif text-5xl font-black mb-3 leading-tight">
-                        Browse <em class="italic text-coral">Projects</em>
-                    </h1>
-                <p class="text-lg text-muted">Find the perfect project to collaborate on</p>
-            </div>
-        </div>
-
-        <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-32 pb-16 gap-4 overflow-hidden">
+    <body class="font-sans bg-paper text-ink overflow-x-hidden">
+        <section class="min-h-screen text-ink relative overflow-hidden">
             <!-- Decorative background element-->
-        </div>
+            <div class="absolute inset-0 dot-grid opacity-40 pointer-events-none"></div>
+            <div class="absolute bottom-32 right-24 w-[520px] h-[520px] rounded-full bg-amber blur-[70px] opacity-25 pointer-events-none"></div>
+            <div class="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full bg-coral blur-[70px] opacity-25 pointer-events-none"></div>
+            <div class="absolute bottom-24 right-20 w-[300px] h-[300px] rounded-full bg-sage blur-[70px] opacity-25 pointer-events-none"></div>
+
+            <aside class="hidden lg:block fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-20">
+                Sidebar
+            </aside>
+
+            <div class="lg:pl-72 pt-14 lg:pt-0 relative z-10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                    <!-- Stats -->
+                    <div class="mb-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2">
+                            <h1 class="font-serif text-5xl font-black mb-4 leading-tight">
+                                Explore <em class="italic text-coral">Projects</em>
+                            </h1>
+                            <p class="text-lg text-muted max-w-2xl">
+                                Find the perfect project to collaborate on and connect with talented teammates
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-start lg:justify-end gap-3">
+                            <div class="bg-white border-2 border-edge rounded-2xl px-6 py-4 shadow-sm hover:shadow-md transition-shadow">
+                                <p class="text-sm text-muted mb-1">Active Projects</p>
+                                <p class="font-serif text-3xl font-black text-ink">
+                                <!-- posts.length -->4
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Search Bar -->
+                    <div class="bg-white rounded-3xl shadow-lg border-2 border-edge  p-8 hover:shadow-xl shadow-black/5 mb-8">
+                        <!-- Search Bar -->
+                        <div class="relative mb-6 gap-2 ">
+                            <i class="fa-solid fa-magnifying-glass px-3 py-4 absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted"></i>
+                            <input
+                                type="text"
+                                placeholder="Search projects by title or description..."
+                                class="w-full px-8 pr-5 py-4  border-2 border-edge bg-cream/30 rounded-2xl focus:outline-none focus:border-coral focus:bg-white transition-all"/>
+                        </div>
+                        <!-- Search Bar -->
+                        <div class="flex flex-wrap items-center gap-3 mb-6">
+                            <div class="flex items-center gap-2 mr-2">
+                                <i class="fa-solid fa-filter w-4 h-4 text-muted"></i>
+                                <span class="text-sm font-semibold text-ink">Filters:</span>
+                            </div>
+                            <select
+                                class="px-4 py-1.5 border-2 border-edge rounded-xl text-sm bg-white hover:bg-cream transition-all shadow-sm font-medium">
+                                <option value="newest">Newest First</option>
+                                <option value="oldest">Oldest First</option>
+                            </select>
+
+                            <select
+                                class="px-4 py-1.5 border-2 border-edge rounded-xl text-sm bg-white hover:bg-cream transition-all shadow-sm font-medium">
+                                <option value="all">All Skills</option>
+                                <!--  
+                                {allSkills.map(skill => (
+                                <option key={skill} value={skill}>{skill}</option>
+                                ))}
+                                -->
+                            </select>
+
+                            <select
+                                class="px-4 py-1.5 border-2 border-edge rounded-xl text-sm bg-white hover:bg-cream transition-all shadow-sm font-medium">
+                                <option value="all">All Departments</option>
+                                <!--
+                                {allDepartments.map(dept => (
+                                <option key={dept} value={dept}>{dept}</option>
+                                ))}
+                                -->
+                            </select>
+
+                            <button
+                                class="ml-auto px-4 py-1.5 text-sm text-coral hover:bg-b rounded-xl font-semibold transition-all ">
+                                Clear all
+                            </button>
+                        </div>  
+                        <!-- Results count -->
+                        <div class="mt-6 pt-6 border-t border-edge">
+                            <p class="text-sm text-muted font-medium mt-6">
+                                Showing <span class="text-ink font-bold">4</span> projects
+                            </p>
+                        </div>
+                    </div> 
+                    <!-- Posts Grid --> 
+                </div>
+            </div>
         </section>
+        <!--  -->
     </body>
 </html>
