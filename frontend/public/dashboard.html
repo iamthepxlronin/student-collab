@@ -38,9 +38,8 @@
                         <div class="flex items-start justify-start lg:justify-end gap-3">
                             <div class="bg-white border-2 border-edge rounded-2xl px-6 py-4 shadow-sm hover:shadow-md transition-shadow">
                                 <p class="text-sm text-muted mb-1">Active Projects</p>
-                                <p class="font-serif text-3xl font-black text-ink">
-                                <!-- posts.length -->4
-                                </p>
+                                <!-- posts.length -->
+                                <p class="font-serif text-3xl font-black text-ink" id="projectsCount">0</p>
                             </div>
                         </div>
                     </div>
@@ -99,9 +98,12 @@
                         </div>
                     </div> 
                     <!-- Posts Grid --> 
+                    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8" id="postsGrid"></div>
                 </div>
             </div>
         </section>
         <!--  -->
+        <script src="./js/utils.js"></script>
+        <script src="./js/dashboard.js"></script>
     </body>
 </html>
