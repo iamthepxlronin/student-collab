@@ -12,6 +12,27 @@
         <link rel="stylesheet" href="../../styles/tailwind.css">
     </head>
     <body class="font-sans bg-paper text-ink overflow-x-hidden">
+        <!-- OVERLAY -->
+        <div id="sidebarOverlay" 
+             class="fixed inset-0 bg-ink opacity-0 pointer-events-none transition-opacity z-30">
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar" 
+               class="fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-40 -translate-x-full transition-transform duration-300">
+        </aside>
+
+        <!-- TOP NAVBAR -->
+        <nav class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-edge z-20 flex items-center px-4 gap-4">
+            <!-- Hamburger button — clicking this toggles the sidebar -->
+            <button id="sidebarToggle" class="text-ink hover:text-coral transition p-1">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <a href="dashboard.html" class="font-serif font-black text-lg">
+                Collab<span class="text-coral">Space</span>
+            </a>
+        </nav>
+
         <section class="min-h-screen text-ink relative overflow-hidden">
             <!-- Decorative background element-->
             <div class="absolute inset-0 dot-grid opacity-40 pointer-events-none"></div>
@@ -19,11 +40,7 @@
             <div class="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full bg-coral blur-[70px] opacity-25 pointer-events-none"></div>
             <div class="absolute bottom-24 right-20 w-[300px] h-[300px] rounded-full bg-sage blur-[70px] opacity-25 pointer-events-none"></div>
 
-            <aside class="hidden lg:block fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-20">
-                Sidebar
-            </aside>
-
-            <div class="lg:pl-72 pt-14 lg:pt-0 relative z-10">
+            <div class="pt-14 relative z-10">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                     <!-- Stats -->
                     <div class="mb-10 grid lg:grid-cols-3 gap-6">
@@ -46,12 +63,14 @@
                     <!-- Search Bar -->
                     <div class="bg-white rounded-3xl shadow-lg border-2 border-edge  p-8 hover:shadow-xl shadow-black/5 mb-8">
                         <!-- Search Bar -->
-                        <div class="relative mb-6 gap-2 ">
-                            <i class="fa-solid fa-magnifying-glass px-3 py-4 absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted"></i>
+                        <div class="relative mb-6 gap-2">
+                            <div class="px-4">
+                                <i class="fa-solid fa-magnifying-glass absolute left- top-1/2 -translate-y-1/2 w-5 h-5 text-muted"></i>
+                            </div>
                             <input
                                 type="text"
                                 placeholder="Search projects by title or description..."
-                                class="w-full px-8 pr-5 py-4  border-2 border-edge bg-cream/30 rounded-2xl focus:outline-none focus:border-coral focus:bg-white transition-all"/>
+                                class="w-full px-10 pr-5 py-4  border-2 border-edge bg-cream/30 rounded-2xl focus:outline-none focus:border-coral focus:bg-white transition-all"/>
                         </div>
                         <!-- Search Bar -->
                         <div class="flex flex-wrap items-center gap-3 mb-6">

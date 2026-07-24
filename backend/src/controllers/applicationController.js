@@ -64,7 +64,7 @@ const getApplicationsForPost = async (req, res) => {
     }
 
     const result = await pool.query(
-      `SELECT a.*, u.full_name, u.email, u.department, u.level, u.skills, u.bio
+      `SELECT a.*, u.full_name, u.email, u.department, u.level, u.skills, u.bio, u.contact_info
        FROM applications a
        JOIN users u ON a.applicant_id = u.id
        WHERE a.post_id = $1

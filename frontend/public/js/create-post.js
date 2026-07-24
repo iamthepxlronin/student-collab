@@ -58,12 +58,14 @@ document.getElementById('createPostForm').addEventListener('submit', async (e) =
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({
+           body: JSON.stringify({
                 title,
                 description,
                 category,
                 required_skills: skills.join(', '),
-                slots_needed
+                slots_needed,
+                project_type: document.getElementById('projectType').value || undefined,
+                deadline: document.getElementById('deadline').value || undefined
             })
         });
 

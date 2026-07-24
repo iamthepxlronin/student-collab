@@ -9,9 +9,30 @@
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <linK rel="stylesheet" href="../../styles/tailwind.css">
+        <link rel="stylesheet" href="../../styles/tailwind.css">
     </head>
     <body>
+        <!-- OVERLAY -->
+        <div id="sidebarOverlay" 
+             class="fixed inset-0 bg-ink opacity-0 pointer-events-none transition-opacity z-30">
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar" 
+               class="fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-40 -translate-x-full transition-transform duration-300">
+        </aside>
+
+        <!-- TOP NAVBAR -->
+        <nav class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-edge z-20 flex items-center px-4 gap-4">
+            <!-- Hamburger button — clicking this toggles the sidebar -->
+            <button id="sidebarToggle" class="text-ink hover:text-coral transition p-1">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <a href="dashboard.html" class="font-serif font-black text-lg">
+                Collab<span class="text-coral">Space</span>
+            </a>
+        </nav>
+
         <div class="min-h-screen bg-paper font-sans text-ink flex items-center justify-center p-4 relative overflow-hidden">
             <!-- Decorative background element-->
             <div class="absolute inset-0 dot-grid opacity-70 pointer-events-none"></div>
@@ -21,7 +42,7 @@
         
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <!-- Header -->
-                <h1 class="font-serif text-4xl font-black mb-2">My <em class="italic text-coral">profile</em></h1>
+                <h1 class="font-serif text-4xl font-black mt-3 mb-2">My <em class="italic text-coral">profile</em></h1>
                 <p class="text-muted mb-8">Tell collaborators about yourself. Contact details are revealed only to people you accept.</p>
                 <div class="bg-white rounded-3xl shadow-lg border-2 border-edge p-8 hover:shadow-xl transition-shadow">
                     <!-- full name-->
@@ -30,7 +51,7 @@
                             Full name
                         </label>
                         <input
-                            id="email"
+                            id="fullName"
                             class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                             value=""
                         >
@@ -56,6 +77,20 @@
                         <p id="emailError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
 
+                    <!-- Level -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-600 mb-2">Level</label>
+                        <select id="level"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white">
+                            <option value="">Select</option>
+                            <option value="100L">100L</option>
+                            <option value="200L">200L</option>
+                            <option value="300L">300L</option>
+                            <option value="400L">400L</option>
+                            <option value="500L">500L</option>
+                        </select>
+                    </div>
+
                     <!-- Bio -->
                     <div class="mb-6">
                         <label for="bio" class="block text-sm font-semibold text-gray-600 mb-2">
@@ -63,6 +98,7 @@
                         </label>
                         <textarea
                         class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white"
+                        id="bio"
                         value=""
                         placeholder="A short intro about you."
                         >
@@ -80,33 +116,24 @@
                             value=""
                         >   
                     </div>
+                    <div id="skillTags" class="flex flex-wrap gap-2 mt-2 mb-3"></div>
 
-                    <!-- EMAIL ENTRY-->
+                    <!-- Contact Info-->
                     <div class="mb-6">
                         <label for="email" class="block text-sm font-semibold text-gray-600 mb-2">
-                            Contact email (shown when accepted)
+                            Contact info (shown when accepted)
                         </label>
                         <input
-                            id="email"
+                            id="contactInfo"
                             class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                             value=""
-                        >
-                    </div>
-
-                    <!-- Whatsapp number-->
-                    <div class="mb-6">
-                        <label for="email" class="block text-sm font-semibold text-gray-600 mb-2">
-                            WhatsApp (optional)
-                        </label>
-                        <input
-                            id="email"
-                            class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                            value=""
+                            placeholder="email@gmail.com or +234 XXX XX"
                         >
                     </div>
 
                     <!-- save BUTTON-->
                     <button
+                        id="saveProfileBtn"
                         type="save"
                         class="w-full font-semibold text-white bg-coral px-6 py-3.5 rounded-full shadow-[0_4px_20px_rgba(232,93,58,0.3)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(232,93,58,0.4)] transition-all"
                         >
@@ -116,5 +143,6 @@
             </div>
         </div>
         <script src="./js/utils.js"></script>
+        <script src="./js/profile.js"></script>
     </body>
 </html>

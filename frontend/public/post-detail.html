@@ -3,21 +3,183 @@
     <head lang="en-US">
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>CollabSpace — Find Your Team</title>
-
+        <title>CollabSpace — Post Detail</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <linK rel="stylesheet" href="../../styles/tailwind.css">
+        <link rel="stylesheet" href="../../styles/tailwind.css">
     </head>
-    <body>
-        <div class="min-h-screen bg-paper font-sans text-ink flex items-center justify-center p-4 relative overflow-hidden">
-            <!-- Decorative background element-->
+    <body class="font-sans bg-paper text-ink overflow-x-hidden">
+
+        <!-- OVERLAY -->
+        <div id="sidebarOverlay"
+             class="fixed inset-0 bg-ink opacity-0 pointer-events-none transition-opacity z-30">
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar"
+               class="fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-40
+                      -translate-x-full transition-transform duration-300">
+        </aside>
+
+        <!-- TOP NAVBAR -->
+        <nav class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-edge z-20
+                    flex items-center px-4 gap-4">
+            <button id="sidebarToggle" class="text-ink hover:text-coral transition p-1">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <a href="dashboard.html" class="font-serif font-black text-lg">
+                Collab<span class="text-coral">Space</span>
+            </a>
+        </nav>
+
+        <div class="min-h-screen bg-paper relative overflow-hidden">
+            <!-- Decorative background elements -->
             <div class="absolute inset-0 dot-grid opacity-50 pointer-events-none"></div>
             <div class="absolute -top-32 -left-24 w-[480px] h-[480px] rounded-full bg-coral blur-[80px] opacity-20 pointer-events-none"></div>
             <div class="absolute bottom-0 -right-24 w-[420px] h-[420px] rounded-full bg-sage blur-[80px] opacity-20 pointer-events-none"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full bg-coral blur-[90px] opacity-15 pointer-events-none"></div>
+
+            <div class="pt-14 relative z-10">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+                    <!-- BACK LINK -->
+                    <a href="dashboard.html"
+                       class="inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition mb-6">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to projects
+                    </a>
+
+                    <!-- LOADING STATE
+                         Shown while JS fetches the post.
+                         JS hides this once data arrives. -->
+                    <div id="loadingState" class="text-center py-20">
+                        <p class="text-muted">Loading project...</p>
+                    </div>
+
+                    <!-- POST CARD
+                         Hidden until JS populates and reveals it. -->
+                    <div id="postCard" class="hidden">
+                        <div class="bg-white rounded-3xl border-2 border-edge p-8 shadow-sm mb-8">
+                            <!-- Category + status badges + date -->
+                            <div class="flex flex-wrap items-center gap-3 mb-4">
+                                <span id="postCategory"
+                                      class="text-xs font-semibold uppercase tracking-wider text-sage bg-sage/10 px-3 py-1 rounded-full">
+                                </span>
+                                <!-- Status badge — only shown if post is closed -->
+                                <span id="postStatusBadge"
+                                      class="hidden text-xs font-semibold uppercase text-muted bg-cream px-3 py-1 rounded-full">
+                                    Closed
+                                </span>
+                                <span id="postDate" class="text-xs text-muted"></span>
+                            </div>
+
+                            <!-- Title -->
+                            <h1 id="postTitle"
+                                class="font-serif text-4xl font-black mb-4 leading-tight">
+                            </h1>
+
+                            <!-- Description -->
+                            <p id="postDescription"
+                               class="text-muted leading-relaxed mb-6">
+                            </p>
+
+                            <!-- Project type and deadline grid — JS fills this if they exist -->
+                            <div id="postMeta" class="grid sm:grid-cols-2 gap-4 mb-6"></div>
+
+                            <!-- Required skills -->
+                            <div class="mb-8">
+                                <p class="text-sm font-semibold text-muted mb-3">Required skills</p>
+                                <div id="postSkills" class="flex flex-wrap gap-2"></div>
+                            </div>
+
+                            <!-- Creator info -->
+                            <div class="border-t border-edge pt-6">
+                                <p class="text-sm text-muted mb-1">Posted by</p>
+                                <p id="postCreator" class="font-semibold text-ink"></p>
+                                <p id="postDepartment" class="text-sm text-muted"></p>
+                            </div>
+                        </div>
+
+                        <!-- APPLY SECTION
+                             Only shown to non-owners when post is open.
+                             JS reveals this if current user is NOT the post owner. -->
+                        <div id="applySection" class="hidden">
+                            <div class="bg-white rounded-3xl border-2 border-edge p-8 shadow-sm mb-8">
+                                <h2 class="font-serif text-2xl font-bold mb-4">
+                                    Apply to this <em class="italic text-coral">project</em>
+                                </h2>
+
+                                <!-- Already applied state — shown by JS if user already applied -->
+                                <div id="alreadyApplied" class="hidden">
+                                    <div class="flex items-center gap-3 p-4 bg-cream rounded-2xl border border-edge">
+                                        <i class="fa-solid fa-circle-check text-sage"></i>
+                                        <p class="text-sm font-semibold">
+                                            You've already applied. Status:
+                                            <span id="applicationStatus" class="text-coral"></span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Apply form — hidden by JS if user already applied -->
+                                <div id="applyForm">
+                                    <textarea
+                                        id="applyMessage"
+                                        rows="4"
+                                        placeholder="Tell the owner why you're a great fit (optional)..."
+                                        class="w-full px-4 py-3 border-2 border-edge rounded-2xl bg-white focus:outline-none focus:border-coral transition mb-4">
+                                    </textarea>
+                                    <button
+                                        id="applyBtn"
+                                        class="font-semibold text-white bg-coral px-6 py-3 rounded-full hover:-translate-y-0.5 shadow-[0_4px_20px_rgba(232,93,58,0.3)] transition">
+                                        Send application
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- OWNER SECTION
+                             Only shown to the post owner.
+                             JS reveals this if current user IS the post owner. -->
+                        <div id="ownerSection" class="hidden">
+                            <div class="bg-white rounded-3xl border-2 border-edge p-8 shadow-sm">
+                                <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+                                    <h2 class="font-serif text-2xl font-bold">
+                                        Applications
+                                        <span id="appCount"
+                                              class="text-muted font-sans text-base font-medium">
+                                            (0)
+                                        </span>
+                                    </h2>
+                                    <!-- Owner actions -->
+                                    <div class="flex gap-2">
+                                        <button
+                                            id="closePostBtn"
+                                            class="px-4 py-2 text-sm rounded-full border-2 border-edge hover:bg-cream font-semibold transition">
+                                            Close project
+                                        </button>
+                                        <button
+                                            id="deletePostBtn"
+                                            class="px-4 py-2 text-sm rounded-full border-2 border-edge text-coral hover:bg-coral/10 font-semibold transition">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Applications list — populated by JS -->
+                                <div id="applicationsList">
+                                    <p class="text-muted text-sm">No applications yet.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- end postCard -->
+
+                </div>
+            </div>
         </div>
+
+        <script src="./js/utils.js"></script>
+        <script src="./js/post-detail.js"></script>
     </body>
 </html>
