@@ -16,7 +16,6 @@ async function loadMyApplications() {
         const data = await response.json();
 
         if (!response.ok) {
-            console.log('Error loading applications:', data.message);
             return;
         }
 
@@ -32,7 +31,7 @@ async function loadMyApplications() {
         renderApplications(apps);
 
     } catch (error) {
-        console.log('Error loading applications:', error);
+        showError('Error loading applications:', error);
     }
 }
 

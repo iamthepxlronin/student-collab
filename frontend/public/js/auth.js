@@ -1,4 +1,3 @@
-console.log('auth.js loaded');
 // CONFIGURATION
 const API_BASE = 'http://localhost:5000/api';
 
@@ -126,7 +125,6 @@ signupForm.addEventListener('submit', async (e) => {
 
     } catch (error) {
         // This catches network errors (e.g. backend not running)
-        console.log('Fetch error:', error);
         showError('signupEmailError', 'Could not connect to server. Is your backend running?');
     }
 });

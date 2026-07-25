@@ -18,7 +18,6 @@ async function loadMyPosts() {
         const data = await response.json();
 
         if (!response.ok) {
-            console.log('Error loading posts:', data.message);
             return;
         }
 
@@ -36,7 +35,7 @@ async function loadMyPosts() {
         renderMyPosts(posts);
 
     } catch (error) {
-        console.log('Error loading my posts:', error);
+        showError('Error loading my posts:', error);
     }
 }
 

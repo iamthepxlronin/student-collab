@@ -40,7 +40,6 @@ async function loadPost() {
         renderPost(post, currentUser);
 
     } catch (error) {
-        console.log('Error loading post:', error);
     }
 }
 
@@ -210,7 +209,6 @@ async function loadApplications(post) {
         `).join('');
 
     } catch (error) {
-        console.log('Error loading applications:', error);
     }
 }
 
@@ -240,7 +238,6 @@ async function acceptApp(appId) {
         );
         if (response.ok) loadApplications();
     } catch (error) {
-        console.log('Error accepting application:', error);
     }
 }
 
@@ -252,7 +249,6 @@ async function rejectApp(appId) {
         );
         if (response.ok) loadApplications();
     } catch (error) {
-        console.log('Error rejecting application:', error);
     }
 }
 
@@ -271,7 +267,6 @@ function wireOwnerButtons(post) {
             });
             if (response.ok) window.location.reload();
         } catch (error) {
-            console.log('Error closing post:', error);
         }
     });
 
@@ -284,7 +279,6 @@ function wireOwnerButtons(post) {
             });
             if (response.ok) window.location.href = 'dashboard.html';
         } catch (error) {
-            console.log('Error deleting post:', error);
         }
     });
 }
@@ -307,7 +301,6 @@ async function checkExistingApplication() {
             }
         }
     } catch (error) {
-        console.log('Error checking application:', error);
     }
 }
 
@@ -349,7 +342,6 @@ function wireApplyButton() {
             document.getElementById('applicationStatus').textContent = 'pending';
 
         } catch (error) {
-            console.log('Error applying:', error);
             btn.textContent = 'Send application';
             btn.disabled = false;
         }

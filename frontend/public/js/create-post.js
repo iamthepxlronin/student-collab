@@ -1,6 +1,4 @@
-console.log('create-post.js loaded');
 const token = requireAuth();
-console.log('token', token);
 
 // Skills tag system
 const skills = [];
@@ -15,7 +13,6 @@ document.getElementById('skills').addEventListener('keydown', (e) => {
         e.target.value = '';
     }
 });
-console.log('skills listener attached');
 
 function renderSkills() {
     let container = document.getElementById('skillTags');
@@ -34,10 +31,8 @@ function removeSkill(skill) {
     renderSkills();
 }
 
-console.log('attaching from listener')
 // Form submission
 document.getElementById('createPostForm').addEventListener('submit', async (e) => {
-    console.log('form submitted')
     e.preventDefault();
 
     const title = document.getElementById('title').value.trim();
@@ -50,8 +45,6 @@ document.getElementById('createPostForm').addEventListener('submit', async (e) =
     if (!category) return alert('Please select a category');
 
     try {
-        console.log('sending:', { title, description, category, required_skills: skills.join(', '), slots_needed });
-        console.log('skills array at submit:', skills);
         const response = await fetch('http://localhost:5000/api/posts', {
             method: 'POST',
             headers: {

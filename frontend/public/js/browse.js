@@ -11,7 +11,7 @@ async function loadUser() {
         const welcomeEl = document.getElementById('welcomeName');
         if (welcomeEl) welcomeEl.textContent = data.name || data.full_name;
     } catch (error) {
-        console.log('Error loading user:', error);
+        showError('Error loading user:');
     }
 }
 
@@ -21,7 +21,7 @@ async function loadPosts() {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
-        if (!response.ok) { console.log('Error fetching posts:', data.message); return; }
+        if (!response.ok) {  return; }
 
         const posts = data.posts || data;
         allPosts = posts;
@@ -29,7 +29,6 @@ async function loadPosts() {
         updateCount(posts.length);
         renderPosts(posts);
     } catch (error) {
-        console.log('Error loading posts:', error);
     }
 }
 

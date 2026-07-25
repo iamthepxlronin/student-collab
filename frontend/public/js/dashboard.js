@@ -16,7 +16,7 @@ async function loadUser() {
         document.getElementById('welcomeName').textContent = name;
 
     } catch (error) {
-        console.log('Error loading user:', error);
+        showError('Error loading user:');
     }
 }
 
@@ -57,7 +57,7 @@ async function loadStats() {
         renderRecentApplications(myApps.slice(0, 3));
 
     } catch (error) {
-        console.log('Error loading stats:', error);
+        showError('Error loading stats:', error);
     }
 }
 

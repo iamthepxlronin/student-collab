@@ -49,7 +49,6 @@ async function loadProfile() {
         const data = await response.json();
 
         if (!response.ok) {
-            console.log('Error loading profile:', data.message);
             return;
         }
 
@@ -66,7 +65,6 @@ async function loadProfile() {
         }
 
     } catch (error) {
-        console.log('Error loading profile:', error);
     }
 }
 
@@ -126,7 +124,6 @@ document.getElementById('saveProfileBtn').addEventListener('click', async () => 
         }, 2000);
 
     } catch (error) {
-        console.log('Error saving profile:', error);
         alert('Could not connect to server');
         btn.textContent = 'Save profile';
         btn.disabled = false;
