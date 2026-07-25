@@ -3,28 +3,28 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>CollabSpace — Find Your Team</title>
-
+        <title>CollabSpace — Dashboard</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
         <link rel="stylesheet" href="../../styles/tailwind.css">
     </head>
     <body class="font-sans bg-paper text-ink overflow-x-hidden">
+
         <!-- OVERLAY -->
-        <div id="sidebarOverlay" 
+        <div id="sidebarOverlay"
              class="fixed inset-0 bg-ink opacity-0 pointer-events-none transition-opacity z-30">
         </div>
 
         <!-- SIDEBAR -->
-        <aside id="sidebar" 
-               class="fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-40 -translate-x-full transition-transform duration-300">
+        <aside id="sidebar"
+               class="fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-40
+                      -translate-x-full transition-transform duration-300">
         </aside>
 
         <!-- TOP NAVBAR -->
-        <nav class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-edge z-20 flex items-center px-4 gap-4">
-            <!-- Hamburger button — clicking this toggles the sidebar -->
+        <nav class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-edge z-20
+                    flex items-center px-4 gap-4">
             <button id="sidebarToggle" class="text-ink hover:text-coral transition p-1">
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
@@ -33,95 +33,92 @@
             </a>
         </nav>
 
-        <section class="min-h-screen text-ink relative overflow-hidden">
-            <!-- Decorative background element-->
+        <div class="min-h-screen bg-paper relative overflow-hidden">
+            <!-- Decorative background elements -->
             <div class="absolute inset-0 dot-grid opacity-40 pointer-events-none"></div>
             <div class="absolute bottom-32 right-24 w-[520px] h-[520px] rounded-full bg-amber blur-[70px] opacity-25 pointer-events-none"></div>
             <div class="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full bg-coral blur-[70px] opacity-25 pointer-events-none"></div>
-            <div class="absolute bottom-24 right-20 w-[300px] h-[300px] rounded-full bg-sage blur-[70px] opacity-25 pointer-events-none"></div>
+            <div class="absolute top-20 right-20 w-[300px] h-[300px] rounded-full bg-sage blur-[70px] opacity-20 pointer-events-none"></div>
 
             <div class="pt-14 relative z-10">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <!-- Stats -->
-                    <div class="mb-10 grid lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2">
-                            <h1 class="font-serif text-5xl font-black mb-4 leading-tight">
-                                Explore <em class="italic text-coral">Projects</em>
-                            </h1>
-                            <p class="text-lg text-muted max-w-2xl">
-                                Find the perfect project to collaborate on and connect with talented teammates
-                            </p>
-                        </div>
-                        <div class="flex items-start justify-start lg:justify-end gap-3">
-                            <div class="bg-white border-2 border-edge rounded-2xl px-6 py-4 shadow-sm hover:shadow-md transition-shadow">
-                                <p class="text-sm text-muted mb-1">Active Projects</p>
-                                <!-- posts.length -->
-                                <p class="font-serif text-3xl font-black text-ink" id="projectsCount">0</p>
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+                    <!-- WELCOME SECTION -->
+                    <div class="mb-10">
+                        <p class="text-muted text-sm font-medium mb-1">Good to see you,</p>
+                        <h1 class="font-serif text-5xl font-black leading-tight mb-2">
+                            <span id="welcomeName">...</span> <em class="italic text-coral">👋</em>
+                        </h1>
+                        <p class="text-muted text-lg">Here's what's happening with your projects.</p>
+                    </div>
+
+                    <!-- STATS CARDS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
+                        <div class="bg-white rounded-3xl border-2 border-edge p-6 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <p class="text-sm font-semibold text-muted">Projects Posted</p>
+                                <div class="w-10 h-10 rounded-2xl bg-coral/10 flex items-center justify-center">
+                                    <i class="fa-solid fa-folder text-coral"></i>
+                                </div>
                             </div>
+                            <p class="font-serif text-4xl font-black text-ink" id="statPostsCount">0</p>
+                        </div>
+
+                        <div class="bg-white rounded-3xl border-2 border-edge p-6 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <p class="text-sm font-semibold text-muted">Applications Sent</p>
+                                <div class="w-10 h-10 rounded-2xl bg-sage/10 flex items-center justify-center">
+                                    <i class="fa-solid fa-paper-plane text-sage"></i>
+                                </div>
+                            </div>
+                            <p class="font-serif text-4xl font-black text-ink" id="statAppsCount">0</p>
+                        </div>
+
+                        <div class="bg-white rounded-3xl border-2 border-edge p-6 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center justify-between mb-4">
+                                <p class="text-sm font-semibold text-muted">Pending Applications</p>
+                                <div class="w-10 h-10 rounded-2xl bg-amber/10 flex items-center justify-center">
+                                    <i class="fa-solid fa-clock text-amber"></i>
+                                </div>
+                            </div>
+                            <p class="font-serif text-4xl font-black text-ink" id="statPendingCount">0</p>
                         </div>
                     </div>
-                    <!-- Search Bar -->
-                    <div class="bg-white rounded-3xl shadow-lg border-2 border-edge  p-8 hover:shadow-xl shadow-black/5 mb-8">
-                        <!-- Search Bar -->
-                        <div class="relative mb-6 gap-2">
-                            <div class="px-4">
-                                <i class="fa-solid fa-magnifying-glass absolute left- top-1/2 -translate-y-1/2 w-5 h-5 text-muted"></i>
+
+                    <!-- RECENT ACTIVITY -->
+                    <div class="grid lg:grid-cols-2 gap-8">
+
+                        <!-- Recent Posts -->
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="font-serif text-2xl font-bold">Recent <em class="italic text-coral">projects</em></h2>
+                                <a href="my-posts.html" class="text-sm text-coral font-semibold hover:underline">
+                                    View all →
+                                </a>
                             </div>
-                            <input
-                                type="text"
-                                placeholder="Search projects by title or description..."
-                                class="w-full px-10 pr-5 py-4  border-2 border-edge bg-cream/30 rounded-2xl focus:outline-none focus:border-coral focus:bg-white transition-all"/>
-                        </div>
-                        <!-- Search Bar -->
-                        <div class="flex flex-wrap items-center gap-3 mb-6">
-                            <div class="flex items-center gap-2 mr-2">
-                                <i class="fa-solid fa-filter w-4 h-4 text-muted"></i>
-                                <span class="text-sm font-semibold text-ink">Filters:</span>
+                            <div id="recentPosts" class="space-y-3">
+                                <p class="text-muted text-sm">Loading...</p>
                             </div>
-                            <select
-                                class="px-4 py-1.5 border-2 border-edge rounded-xl text-sm bg-white hover:bg-cream transition-all shadow-sm font-medium">
-                                <option value="newest">Newest First</option>
-                                <option value="oldest">Oldest First</option>
-                            </select>
-
-                            <select
-                                class="px-4 py-1.5 border-2 border-edge rounded-xl text-sm bg-white hover:bg-cream transition-all shadow-sm font-medium">
-                                <option value="all">All Skills</option>
-                                <!--  
-                                {allSkills.map(skill => (
-                                <option key={skill} value={skill}>{skill}</option>
-                                ))}
-                                -->
-                            </select>
-
-                            <select
-                                class="px-4 py-1.5 border-2 border-edge rounded-xl text-sm bg-white hover:bg-cream transition-all shadow-sm font-medium">
-                                <option value="all">All Departments</option>
-                                <!--
-                                {allDepartments.map(dept => (
-                                <option key={dept} value={dept}>{dept}</option>
-                                ))}
-                                -->
-                            </select>
-
-                            <button
-                                class="ml-auto px-4 py-1.5 text-sm text-coral hover:bg-b rounded-xl font-semibold transition-all ">
-                                Clear all
-                            </button>
-                        </div>  
-                        <!-- Results count -->
-                        <div class="mt-6 pt-6 border-t border-edge">
-                            <p class="text-sm text-muted font-medium mt-6">
-                                Showing <span class="text-ink font-bold">4</span> projects
-                            </p>
                         </div>
-                    </div> 
-                    <!-- Posts Grid --> 
-                    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8" id="postsGrid"></div>
+
+                        <!-- Recent Applications -->
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="font-serif text-2xl font-bold">Recent <em class="italic text-sage">applications</em></h2>
+                                <a href="applications.html" class="text-sm text-coral font-semibold hover:underline">
+                                    View all →
+                                </a>
+                            </div>
+                            <div id="recentApplications" class="space-y-3">
+                                <p class="text-muted text-sm">Loading...</p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </section>
-        <!--  -->
+        </div>
+
         <script src="./js/utils.js"></script>
         <script src="./js/dashboard.js"></script>
     </body>

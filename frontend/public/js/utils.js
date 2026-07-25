@@ -20,7 +20,8 @@ function renderSidebar() {
     const currentPage = window.location.pathname.split('/').pop();
 
     const links = [
-        { href: 'dashboard.html', label: 'Browse Projects', icon: 'fa-compass' },
+        { href: 'dashboard.html', label: 'Dashboard', icon: 'fa-house' },
+        { href: 'browse.html', label: 'Browse Projects', icon: 'fa-compass' },
         { href: 'create-post.html', label: 'New Project', icon: 'fa-plus' },
         { href: 'my-posts.html', label: 'My Projects', icon: 'fa-folder' },
         { href: 'applications.html', label: 'My Applications', icon: 'fa-paper-plane' },

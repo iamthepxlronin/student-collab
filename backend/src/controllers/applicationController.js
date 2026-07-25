@@ -156,4 +156,41 @@ const rejectApplication = async (req, res) => {
   }
 }
 
-module.exports = { applyToPost, getApplicationsForPost, acceptApplication, rejectApplication }
+const getMyApplications = async (req, res) => {
+  try {
+    // Join with collaboration_posts to get the post title and category
+    // so the frontend can display them without a separate fetch
+    const result = await pool.query(
+      `SELECT a.*, 
+              cp.title as post_title, 
+              cp.category as post_category,
+              cp.status as post_status
+       FROM applications a
+       JOIN collaboration_posts cp ON a.post_id = cp.id
+       WHERE a.applicant_id = $1
+       ORDER BY a.created_at DESC`,
+      [req.user.id]
+    )
+    res.json(result.rows)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
+
+const getMyApplication = async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT * FROM applications 
+       WHERE post_id = $1 AND applicant_id = $2`,
+      [req.params.id, req.user.id]
+    )
+    // Return the application if found, or null if not
+    res.json({ application: result.rows[0] || null })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
+
+module.exports = { applyToPost, getApplicationsForPost, acceptApplication, rejectApplication, getMyApplications, getMyApplication }

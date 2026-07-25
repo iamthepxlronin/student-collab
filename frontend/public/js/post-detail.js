@@ -133,6 +133,24 @@ function renderPost(post, currentUser) {
             wireApplyButton(post);
         }
     }
+
+    // SMART BACK LINK
+    // Check where the user came from and update the back link accordingly
+    const backLink = document.getElementById('backLink');
+    if (backLink) {
+        const referrer = document.referrer;
+        if (referrer.includes('applications.html')) {
+            backLink.href = 'applications.html';
+            backLink.innerHTML = '<i class="fa-solid fa-arrow-left"></i> Back to applications';
+        } else if (referrer.includes('my-posts.html')) {
+            backLink.href = 'my-posts.html';
+            backLink.innerHTML = '<i class="fa-solid fa-arrow-left"></i> Back to my projects';
+        } else {
+            backLink.href = 'browse.html';
+            backLink.innerHTML = '<i class="fa-solid fa-arrow-left"></i> Back to projects';
+        }
+    }
+
 }
 
 // LOAD APPLICATIONS (owner only)

@@ -91,4 +91,58 @@ const getSinglePost = async (req, res) => {
   }
 }
 
-module.exports = { createPost, getAllPosts, getMyPosts, getSinglePost }
+const deletePost = async (req, res) => {
+  const { id } = req.params
+  try {
+    // First verify the post belongs to the logged-in user
+    // so someone can't delete another person's post
+    const post = await pool.query(
+      'SELECT * FROM collaboration_posts WHERE id = $1',
+      [id]
+    )
+    if (post.rows.length === 0) {
+      return res.status(404).json({ message: 'Post not found' })
+    }
+    if (post.rows[0].user_id !== req.user.id) {
+      return res.status(403).json({ message: 'Not authorized' })
+    }
+    // Delete applications first due to foreign key constraint —
+    // the applications table references collaboration_posts,
+    // so PostgreSQL won't let you delete a post that has applications
+    // unless you delete the applications first
+    await pool.query('DELETE FROM applications WHERE post_id = $1', [id])
+    await pool.query('DELETE FROM collaboration_posts WHERE id = $1', [id])
+    res.json({ message: 'Post deleted successfully' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
+
+const updatePostStatus = async (req, res) => {
+  const { id } = req.params
+  const { status } = req.body
+  try {
+    const post = await pool.query(
+      'SELECT * FROM collaboration_posts WHERE id = $1',
+      [id]
+    )
+    if (post.rows.length === 0) {
+      return res.status(404).json({ message: 'Post not found' })
+    }
+    if (post.rows[0].user_id !== req.user.id) {
+      return res.status(403).json({ message: 'Not authorized' })
+    }
+    const result = await pool.query(
+      `UPDATE collaboration_posts SET status = $1, updated_at = NOW()
+       WHERE id = $2 RETURNING *`,
+      [status, id]
+    )
+    res.json(result.rows[0])
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
+
+module.exports = { createPost, getAllPosts, getMyPosts, getSinglePost, deletePost, updatePostStatus }

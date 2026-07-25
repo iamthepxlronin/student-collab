@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CollabSpace — Find Your Team</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <link rel="stylesheet" href="../../styles/tailwind.css">
+    </head>
+    <body class="font-sans bg-paper text-ink overflow-x-hidden">
+        <!-- OVERLAY -->
+        <div id="sidebarOverlay" 
+             class="fixed inset-0 bg-ink opacity-0 pointer-events-none transition-opacity z-30">
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar" 
+               class="fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-40 -translate-x-full transition-transform duration-300">
+        </aside>
+
+        <!-- TOP NAVBAR -->
+        <nav class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-edge z-20 flex items-center px-4 gap-4">
+            <!-- Hamburger button — clicking this toggles the sidebar -->
+            <button id="sidebarToggle" class="text-ink hover:text-coral transition p-1">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <a href="dashboard.html" class="font-serif font-black text-lg">
+                Collab<span class="text-coral">Space</span>
+            </a>
+        </nav>
+
+        <section class="min-h-screen text-ink relative overflow-hidden">
+            <!-- Decorative background element-->
+            <div class="absolute inset-0 dot-grid opacity-40 pointer-events-none"></div>
+            <div class="absolute bottom-32 right-24 w-[520px] h-[520px] rounded-full bg-amber blur-[70px] opacity-25 pointer-events-none"></div>
+            <div class="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full bg-coral blur-[70px] opacity-25 pointer-events-none"></div>
+            <div class="absolute bottom-24 right-20 w-[300px] h-[300px] rounded-full bg-sage blur-[70px] opacity-25 pointer-events-none"></div>
+
+            <div class="pt-14 relative z-10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                    <!-- Stats -->
+                    <div class="mb-10 grid lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2">
+                            <h1 class="font-serif text-5xl font-black mb-4 leading-tight">
+                                Explore <em class="italic text-coral">Projects</em>
+                            </h1>
+                            <p class="text-lg text-muted max-w-2xl">
+                                Find the perfect project to collaborate on and connect with talented teammates
+                            </p>
+                        </div>
+                        <div class="flex items-start justify-start lg:justify-end gap-3">
+                            <div class="bg-white border-2 border-edge rounded-2xl px-6 py-4 shadow-sm hover:shadow-md transition-shadow">
+                                <p class="text-sm text-muted mb-1">Active Projects</p>
+                                <!-- posts.length -->
+                                <p class="font-serif text-3xl font-black text-ink" id="projectsCount">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Search Bar -->
+                    <div class="bg-white rounded-3xl shadow-lg border-2 border-edge p-8 hover:shadow-xl shadow-black/5 mb-8">
+                        <div class="relative mb-6">
+                            <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-muted"></i>
+                            <input
+                                id="searchInput"
+                                type="text"
+                                placeholder="Search projects by title or description..."
+                                class="w-full pl-12 pr-5 py-4 border-2 border-edge bg-cream/30 rounded-2xl focus:outline-none focus:border-coral focus:bg-white transition-all"/>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 mb-6">
+                            <div class="flex items-center gap-2 mr-2">
+                                <i class="fa-solid fa-filter w-4 h-4 text-muted"></i>
+                                <span class="text-sm font-semibold text-ink">Filters:</span>
+                            </div>
+                            <select id="sortFilter"
+                                class="px-4 py-1.5 border-2 border-edge rounded-xl text-sm bg-white hover:bg-cream transition-all shadow-sm font-medium">
+                                <option value="newest">Newest First</option>
+                                <option value="oldest">Oldest First</option>
+                            </select>
+                            <select id="categoryFilter"
+                                class="px-4 py-1.5 border-2 border-edge rounded-xl text-sm bg-white hover:bg-cream transition-all shadow-sm font-medium">
+                                <option value="all">All Categories</option>
+                                <option value="research">Research</option>
+                                <option value="documentation">Documentation</option>
+                                <option value="webDevelopment">Web Development</option>
+                                <option value="mobile">Mobile</option>
+                                <option value="cybersecurity">Cybersecurity</option>
+                                <option value="uiux">UI/UX</option>
+                                <option value="general">General</option>
+                            </select>
+                            <button id="clearFilters"
+                                class="ml-auto px-4 py-1.5 text-sm text-coral hover:bg-cream rounded-xl font-semibold transition-all">
+                                Clear all
+                            </button>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-edge">
+                            <p class="text-sm text-muted font-medium">
+                                Showing <span class="text-ink font-bold" id="resultsCount">0</span> projects
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Posts Grid --> 
+                    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8" id="postsGrid"></div>
+                </div>
+            </div>
+        </section>
+        <!--  -->
+        <script src="./js/utils.js"></script>
+        <script src="./js/browse.js"></script>
+    </body>
+</html>

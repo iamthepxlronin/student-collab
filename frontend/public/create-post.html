@@ -12,121 +12,153 @@
         <link rel="stylesheet" href="../../styles/tailwind.css">
     </head>
     <body class="font-sans bg-paper text-ink overflow-x-hidden">
-        <div class="min-h-screen bg-paper font-sans text-ink flex items-center justify-center p-4 relative overflow-hidden">
+
+        <!-- OVERLAY -->
+        <div id="sidebarOverlay"
+             class="fixed inset-0 bg-ink opacity-0 pointer-events-none transition-opacity z-30">
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside id="sidebar"
+               class="fixed left-0 top-0 h-screen w-72 border-r border-edge bg-white z-40
+                      -translate-x-full transition-transform duration-300">
+        </aside>
+
+        <!-- TOP NAVBAR -->
+        <nav class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-edge z-20
+                    flex items-center px-4 gap-4">
+            <button id="sidebarToggle" class="text-ink hover:text-coral transition p-1">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <a href="dashboard.html" class="font-serif font-black text-lg">
+                Collab<span class="text-coral">Space</span>
+            </a>
+        </nav>
+
+        <div class="min-h-screen bg-paper relative overflow-hidden">
             <!-- Decorative background element-->
             <div class="absolute inset-0 dot-grid opacity-70 pointer-events-none"></div>
             <div class="absolute -top-32 -right-24 w-[520px] h-[520px] rounded-full bg-amber blur-[70px] opacity-25 pointer-events-none"></div>
             <div class="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full bg-coral blur-[70px] opacity-25 pointer-events-none"></div>
             <div class="absolute bottom-24 right-20 w-[300px] h-[300px] rounded-full bg-sage blur-[70px] opacity-25 pointer-events-none"></div>
             
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <!-- Header -->
-                <h1 class="font-serif text-4xl font-black mb-2">Post a 
-                    <em class="italic text-coral">new project</em>
-                </h1>
-                <p class="text-muted mb-8">Tell teamates what your project is and what skills or roles are needed.</p>
+            <div class="pt-14 relative z-10">
+                <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                    <!-- BACK LINK -->
+                        <a href="browse.html"
+                        class="inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition mb-6">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Back to projects
+                        </a>
 
-                <!-- Form -->
-                <form class="space-y-5" id="createPostForm">
-                    <div class="bg-white rounded-3xl shadow-lg border-2 border-edge p-8 hover:shadow-xl transition-shadow">
-                        <!-- Project title -->
-                        <div class="mb-6">
-                            <label for="title" class="block text-sm font-semibold text-gray-600 mb-2">
-                                Project title
-                            </label>
-                            <input
-                                id="title"
-                                class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                                value=""
-                                placeholder="e.g Research on AI assisted learning"
-                            >
-                            <p id="emailError" class="text-red-500 text-xs mt-1 hidden"></p>
-                        </div>
+                    <!-- Header -->
+                    <h1 class="font-serif text-4xl font-black mb-2">Post a 
+                        <em class="italic text-coral">new project</em>
+                    </h1>
+                    <p class="text-muted mb-8">Tell teamates what your project is and what skills or roles are needed.</p>
 
-                        <!-- Description -->
-                        <div class="mb-6">
-                            <label for="description" class="block text-sm font-semibold text-gray-600 mb-2">
-                                Desrcription
-                            </label>
-                            <textarea
-                                id="description"
-                                class="w-full px-3 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                                value=""
-                                placeholder="What are you building, researching? Whats the goal"
-                            >
-                            </textarea>
-                        </div>
-
-                        <!-- category -->
-                        <div class="mb-6">
-                            <label for="category" class="block text-sm font-semibold text-gray-600 mb-2">
-                                Category
-                            </label>
-                            <select
-                                id="category"
-                                class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white"
-                                value=""
+                    <!-- Form -->
+                    <form class="space-y-5" id="createPostForm">
+                        <div class="bg-white rounded-3xl shadow-lg border-2 border-edge p-8 hover:shadow-xl transition-shadow">
+                            <!-- Project title -->
+                            <div class="mb-6">
+                                <label for="title" class="block text-sm font-semibold text-gray-600 mb-2">
+                                    Project title
+                                </label>
+                                <input
+                                    id="title"
+                                    class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    value=""
+                                    placeholder="e.g Research on AI assisted learning"
                                 >
-                                <option value="">Choose...</option>
-                                <option value="research">Research</option>
-                                <option value="documentation">Documentation</option>
-                                <option value="webDevelopment">Web Development</option>
-                                <option value="mobile">Mobile</option>
-                                <option value="cybersecurity">cybersecurity</option>
-                                <option value="uiux">UI/UX</option>
-                                <option value="general">General</option>
-                            </select>
-                        </div>
+                                <p id="emailError" class="text-red-500 text-xs mt-1 hidden"></p>
+                            </div>
 
-                        <!-- Project type -->
-                        <div class="mb-6">
-                            <label for="type" class="block text-sm font-semibold text-gray-600 mb-2">
-                                Project type (optional)
-                            </label>
-                            <input
-                                id="projectType"
-                                class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                                value=""
-                                placeholder="e.g Class project, Hackathon"
-                            >
-                        </div>
+                            <!-- Description -->
+                            <div class="mb-6">
+                                <label for="description" class="block text-sm font-semibold text-gray-600 mb-2">
+                                    Desrcription
+                                </label>
+                                <textarea
+                                    id="description"
+                                    class="w-full px-3 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    value=""
+                                    placeholder="What are you building, researching? Whats the goal"
+                                >
+                                </textarea>
+                            </div>
 
-                        <!-- Deadline -->
-                        <div class="mb-6">
-                            <label for="deadline" class="block text-sm font-semibold text-gray-600 mb-2">
-                                Deadline (optional)
-                            </label>
-                            <input
-                                type="date"
-                                id="deadline"
-                                class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                                value=""
-                            >
-                        </div>
+                            <!-- category -->
+                            <div class="mb-6">
+                                <label for="category" class="block text-sm font-semibold text-gray-600 mb-2">
+                                    Category
+                                </label>
+                                <select
+                                    id="category"
+                                    class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white"
+                                    value=""
+                                    >
+                                    <option value="">Choose...</option>
+                                    <option value="research">Research</option>
+                                    <option value="documentation">Documentation</option>
+                                    <option value="webDevelopment">Web Development</option>
+                                    <option value="mobile">Mobile</option>
+                                    <option value="cybersecurity">cybersecurity</option>
+                                    <option value="uiux">UI/UX</option>
+                                    <option value="general">General</option>
+                                </select>
+                            </div>
 
-                        <!-- Required skills -->
-                        <div class="mb-6">
-                            <label for="skills" class="block text-sm font-semibold text-gray-600 mb-2">
-                                Required skills
-                            </label>
-                            <input
-                                id="skills"
-                                class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                                value=""
-                                placeholder="Type a skill and hit Enter"
-                            >
-                        </div>
-                        <div id="skillTags" class="flex flex-wrap gap-2 mb-6"></div>
+                            <!-- Project type -->
+                            <div class="mb-6">
+                                <label for="type" class="block text-sm font-semibold text-gray-600 mb-2">
+                                    Project type (optional)
+                                </label>
+                                <input
+                                    id="projectType"
+                                    class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    value=""
+                                    placeholder="e.g Class project, Hackathon"
+                                >
+                            </div>
 
-                        <!-- POST BUTTON-->
-                        <button
-                            type="submit"
-                            class="w-full font-semibold text-white bg-coral px-6 py-3.5 rounded-full shadow-[0_4px_20px_rgba(232,93,58,0.3)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(232,93,58,0.4)] transition-all"
-                            >
-                            Post project
-                        </button>
-                    </div>
-                </form>
+                            <!-- Deadline -->
+                            <div class="mb-6">
+                                <label for="deadline" class="block text-sm font-semibold text-gray-600 mb-2">
+                                    Deadline (optional)
+                                </label>
+                                <input
+                                    type="date"
+                                    id="deadline"
+                                    class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    value=""
+                                >
+                            </div>
+
+                            <!-- Required skills -->
+                            <div class="mb-6">
+                                <label for="skills" class="block text-sm font-semibold text-gray-600 mb-2">
+                                    Required skills
+                                </label>
+                                <input
+                                    id="skills"
+                                    class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    value=""
+                                    placeholder="Type a skill and hit Enter"
+                                >
+                            </div>
+                            <div id="skillTags" class="flex flex-wrap gap-2 mb-6"></div>
+
+                            <!-- POST BUTTON-->
+                            <button
+                                type="submit"
+                                class="w-full font-semibold text-white bg-coral px-6 py-3.5 rounded-full shadow-[0_4px_20px_rgba(232,93,58,0.3)] hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(232,93,58,0.4)] transition-all"
+                                >
+                                Post project
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <script src="./js/utils.js"></script>
