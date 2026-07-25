@@ -25,9 +25,7 @@ async function loadPosts() {
 
         const posts = data.posts || data;
         allPosts = posts;
-
-        updateCount(posts.length);
-        renderPosts(posts);
+        applyFilters();
     } catch (error) {
     }
 }
@@ -81,9 +79,10 @@ function applyFilters() {
     const sort = document.getElementById('sortFilter').value;
     const category = document.getElementById('categoryFilter').value;
 
-    let filtered = [...allPosts];
+    // Only show open posts — closed posts are not available for applications
+    let filtered = allPosts.filter(post => post.status === 'open');
 
-    // Text search — checks title and description
+    // Text search
     if (query) {
         filtered = filtered.filter(post =>
             post.title.toLowerCase().includes(query) ||
