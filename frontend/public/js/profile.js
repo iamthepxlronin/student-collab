@@ -42,7 +42,7 @@ document.getElementById('skills').addEventListener('keydown', (e) => {
 // ============================================================
 async function loadProfile() {
     try {
-        const response = await fetch('http://localhost:5000/api/users/profile', {
+        const response = await fetch('https://student-collab-production.up.railway.app/api/users/profile', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -93,7 +93,7 @@ document.getElementById('saveProfileBtn').addEventListener('click', async () => 
     }
 
     try {
-        const response = await fetch('http://localhost:5000/api/users/profile', {
+        const response = await fetch('https://student-collab-production.up.railway.app/api/users/profile', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

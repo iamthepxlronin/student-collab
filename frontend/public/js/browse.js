@@ -3,7 +3,7 @@ let allPosts = [];
 
 async function loadUser() {
     try {
-        const response = await fetch('http://localhost:5000/api/auth/me', {
+        const response = await fetch('https://student-collab-production.up.railway.app/api/auth/me', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
@@ -17,7 +17,7 @@ async function loadUser() {
 
 async function loadPosts() {
     try {
-        const response = await fetch('http://localhost:5000/api/posts', {
+        const response = await fetch('https://student-collab-production.up.railway.app/api/posts', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();

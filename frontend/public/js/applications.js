@@ -9,7 +9,7 @@ const token = requireAuth();
 // ============================================================
 async function loadMyApplications() {
     try {
-        const response = await fetch('http://localhost:5000/api/applications/my-applications', {
+        const response = await fetch('https://student-collab-production.up.railway.app/api/applications/my-applications', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 

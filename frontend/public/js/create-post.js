@@ -45,7 +45,7 @@ document.getElementById('createPostForm').addEventListener('submit', async (e) =
     if (!category) return alert('Please select a category');
 
     try {
-        const response = await fetch('http://localhost:5000/api/posts', {
+        const response = await fetch('https://student-collab-production.up.railway.app/api/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
