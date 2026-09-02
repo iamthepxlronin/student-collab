@@ -1,5 +1,29 @@
 const pool = require('../config/db')
 
+// calculate Match Score
+function calculateMatchScore(userSkills, requiredSkills) {
+  if (!userSkills || !requiredSkills) {
+    return { matchedSkills: [], matchCount: 0, totalRequired: 0, matchPercentage: 0 }
+  }
+
+  const userSet = userSkills.toLowerCase().split(',').map(s => s.trim()).filter(Boolean)
+  const requiredSet = requiredSkills.toLowerCase().split(',').map(s => s.trim()).filter(Boolean)
+
+  if (requiredSet.length === 0) {
+    return { matchedSkills: [], matchCount: 0, totalRequired: 0, matchPercentage: 0 }
+  }
+
+  const matched = requiredSet.filter(skill => userSet.includes(skill))
+
+  return {
+    matchedSkills: matched,
+    matchCount: matched.length,
+    totalRequired: requiredSet.length,
+    matchPercentage: Math.round((matched.length / requiredSet.length) * 100)
+  }
+}
+
+
 const createPost = async (req, res) => {
   // Added project_type and deadline to destructuring.
   // Destructuring just means we're pulling these specific fields
@@ -31,16 +55,21 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    // No changes needed here — SELECT cp.* already returns ALL columns
-    // including the new project_type and deadline we just added.
-    // The * means "give me everything", so new columns are included automatically.
     const result = await pool.query(
       `SELECT cp.*, u.full_name as creator_name, u.department as creator_department
        FROM collaboration_posts cp
        JOIN users u ON cp.user_id = u.id
-       ORDER BY cp.created_at DESC`
+       WHERE cp.user_id != $1
+       ORDER BY cp.created_at DESC`,
+      [req.user.id]
     )
-    res.json(result.rows)
+
+    const postsWithMatch = result.rows.map(post => {
+      const match = calculateMatchScore(req.user.skills, post.required_skills)
+      return { ...post, ...match }
+    })
+
+    res.json(postsWithMatch)
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Server error' })

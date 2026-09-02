@@ -27,20 +27,25 @@ async function loadUser() {
 // ============================================================
 async function loadStats() {
     try {
-        const [postsRes, appsRes] = await Promise.all([
+        const [postsRes, appsRes, allPostsRes] = await Promise.all([
             fetch('http://localhost:5000/api/posts/my-posts', {
                 headers: { 'Authorization': `Bearer ${token}` }
             }),
             fetch('http://localhost:5000/api/applications/my-applications', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            }),
+            fetch('http://localhost:5000/api/posts', {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
         ]);
 
         const posts = await postsRes.json();
         const apps = await appsRes.json();
+        const allPosts = await allPostsRes.json();
 
         const myPosts = posts.posts || posts;
         const myApps = apps.applications || apps;
+        const openPosts = (allPosts.posts || allPosts).filter(p => p.status === 'open');
 
         // Total posts created
         document.getElementById('statPostsCount').textContent = myPosts.length;
@@ -52,12 +57,16 @@ async function loadStats() {
         const pending = myApps.filter(a => a.status === 'pending');
         document.getElementById('statPendingCount').textContent = pending.length;
 
+        // Posts that match your skills (50%+ overlap)
+        const matchingPosts = openPosts.filter(p => (p.matchPercentage || 0) >= 50);
+        document.getElementById('statMatchCount').textContent = matchingPosts.length;
+
         // Render recent activity (last 3 of each)
         renderRecentPosts(myPosts.slice(0, 3));
         renderRecentApplications(myApps.slice(0, 3));
 
     } catch (error) {
-        showError('Error loading stats:', error);
+        console.error('Error loading stats:', error);
     }
 }
 

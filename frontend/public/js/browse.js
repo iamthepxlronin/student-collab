@@ -54,11 +54,18 @@ function renderPosts(posts) {
             </div>
             <h3 class="font-serif capitalize text-xl font-bold mb-2 leading-snug group-hover:text-coral transition">${item.title}</h3>
             <p class="text-sm text-muted line-clamp-3 mb-4">${item.description}</p>
-            <div class="flex flex-wrap gap-2 mb-4">
+            <div class="flex flex-wrap gap-2 mb-3">
                 ${(item.required_skills || '').split(',').filter(s => s.trim()).slice(0, 4).map(s =>
                     `<span class="text-xs px-4 py-1.5 rounded-full bg-cream border border-edge font-medium">${s.trim()}</span>`
                 ).join('')}
             </div>
+            ${typeof item.matchPercentage === 'number' && item.matchPercentage > 0 ? `
+                <div class="mb-4">
+                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-sage/15 text-sage border border-sage/30">
+                        ${item.matchPercentage}% skill match
+                    </span>
+                </div>
+            ` : ''}
             <div class="mt-auto py-3 border-t border-edge text-xs text-muted">
                 by <span class="font-semibold text-ink">${item.creator_name || 'Unknown'}</span>
                 ${item.creator_department ? `· ${item.creator_department}` : ''}
@@ -98,6 +105,8 @@ function applyFilters() {
     // Sort by date
     if (sort === 'newest') {
         filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    } else if (sort === 'match') {
+        filtered.sort((a, b) => (b.matchPercentage || 0) - (a.matchPercentage || 0));
     } else {
         filtered.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
     }
