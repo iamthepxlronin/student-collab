@@ -11,7 +11,7 @@ const applicationRoutes = require('./routes/applicationRoutes')
 const app = express()
 
 app.use(cors({
-  origin: ['http://127.0.0.1:5500', 'https://student-collab-xi-vercel.app'],
+  origin: ['http://127.0.0.1:5500', 'https://student-collab-xi.vercel.app'],
   credentials: true
 }))
 app.use(express.json())
