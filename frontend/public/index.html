@@ -13,20 +13,36 @@
     </head>
     <body class="font-sans bg-paper text-ink overflow-x-hidden">
         <!-- NAVBAR -->
-        <nav class="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-10 py-4 bg-paper/90 backdrop-blur border-b border-edge">
-            <!-- LOGO -->
-            <div class="flex gap-2">
-                <img src="">
-                <span>StuCollab</span>
-            </div>
-            <!-- NAVIGATION LINKS -->
-            <div class="flex gap-4">
-                <a class="text-sm font-medium text-muted px-4 py-2 rounded-full hover:bg-cream hover:text-ink transition">How it works</a>
-                <a class="text-sm font-medium text-muted px-4 py-2 rounded-full hover:bg-cream hover:text-ink transition">Features</a>
-                <a href="auth.html?mode=login" class="text-sm font-medium text-muted px-4 py-2 rounded-full hover:bg-cream hover:text-ink transition">Login</a>
-                <a href="auth.html?mode=signup" class="text-sm font-semibold text-white bg-ink px-5 py-2 rounded-full hover:bg-coral hover:-translate-y-px transition">Get started</a>
-            </div>
-        </nav>
+        <!-- NAVBAR -->
+<nav class="fixed top-0 inset-x-0 z-50 px-6 sm:px-10 py-4 bg-paper/90 backdrop-blur border-b border-edge">
+    <div class="flex items-center justify-between">
+        <!-- LOGO -->
+        <div class="flex gap-2 items-center">
+            <span class="font-serif font-black text-lg">StuCollab</span>
+        </div>
+
+        <!-- DESKTOP LINKS (hidden on mobile) -->
+        <div class="hidden md:flex gap-4 items-center">
+            <a class="text-sm font-medium text-muted px-4 py-2 rounded-full hover:bg-cream hover:text-ink transition">How it works</a>
+            <a class="text-sm font-medium text-muted px-4 py-2 rounded-full hover:bg-cream hover:text-ink transition">Features</a>
+            <a href="auth.html?mode=login" class="text-sm font-medium text-muted px-4 py-2 rounded-full hover:bg-cream hover:text-ink transition">Login</a>
+            <a href="auth.html?mode=signup" class="text-sm font-semibold text-white bg-ink px-5 py-2 rounded-full hover:bg-coral hover:-translate-y-px transition">Get started</a>
+        </div>
+
+        <!-- MOBILE HAMBURGER (hidden on desktop) -->
+        <button id="navToggle" class="md:hidden text-ink p-2">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+    </div>
+
+    <!-- MOBILE MENU PANEL (hidden by default) -->
+    <div id="navMenu" class="hidden md:hidden flex-col gap-2 mt-4 pb-2">
+        <a class="text-sm font-medium text-muted px-4 py-3 rounded-full hover:bg-cream hover:text-ink transition">How it works</a>
+        <a class="text-sm font-medium text-muted px-4 py-3 rounded-full hover:bg-cream hover:text-ink transition">Features</a>
+        <a href="auth.html?mode=login" class="text-sm font-medium text-muted px-4 py-3 rounded-full hover:bg-cream hover:text-ink transition">Login</a>
+        <a href="auth.html?mode=signup" class="text-sm font-semibold text-white bg-ink px-5 py-3 rounded-full text-center hover:bg-coral transition">Get started</a>
+    </div>
+</nav>
 
         <!-- HERO -->
         <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-32 pb-16 gap-4 overflow-hidden">
@@ -312,5 +328,12 @@
 
         <script src="./js/utils.js"></script>
         <script src="./js/auth.js"></script>
+        <script>
+    document.getElementById('navToggle').addEventListener('click', () => {
+        const menu = document.getElementById('navMenu');
+        menu.classList.toggle('hidden');
+        menu.classList.toggle('flex');
+    });
+        </script>
     </body>
 </html>
