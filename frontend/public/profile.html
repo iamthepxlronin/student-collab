@@ -106,15 +106,27 @@
                     </div>
 
                     <!-- Skills -->
+                    <!-- Skills -->
                     <div class="mb-6">
                         <label for="skills" class="block text-sm font-semibold text-gray-600 mb-2">
                             Skills
                         </label>
-                        <input
-                            id="skills"
-                            class="w-full px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                            value=""
-                        >   
+                        <div class="flex gap-2">
+                           <input
+                           id="skills"
+                           enterkeyhint="done"
+                           class="flex-1 px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                           value=""
+                           placeholder="Type a skill and tap +"
+                           >
+                           <button
+                               type="button"
+                               id="addSkillBtn"
+                               class="w-14 shrink-0 rounded-full bg-coral text-white font-bold text-xl hover:-translate-y-0.5 transition-all"
+                           >
+                              +
+                          </button>
+                       </div>
                     </div>
                     <div id="skillTags" class="flex flex-wrap gap-2 mt-2 mb-3"></div>
 
