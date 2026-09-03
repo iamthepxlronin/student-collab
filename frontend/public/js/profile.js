@@ -24,15 +24,23 @@ function removeSkill(skill) {
     renderSkillPills();
 }
 
+function addSkillFromInput(inputEl) {
+    const value = inputEl.value.trim();
+    if (!value || skillsArray.includes(value)) return;
+    skillsArray.push(value);
+    renderSkillPills();
+    inputEl.value = '';
+}
+
 document.getElementById('skills').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.keyCode === 13) {
         e.preventDefault();
-        const value = e.target.value.trim();
-        if (!value || skillsArray.includes(value)) return;
-        skillsArray.push(value);
-        renderSkillPills();
-        e.target.value = '';
+        addSkillFromInput(e.target);
     }
+});
+
+document.getElementById('addSkillBtn').addEventListener('click', () => {
+    addSkillFromInput(document.getElementById('skills'));
 });
 
 // ============================================================
