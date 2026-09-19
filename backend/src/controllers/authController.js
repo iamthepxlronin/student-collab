@@ -72,7 +72,7 @@ const login = async (req, res) => {
 const me = async (req, res) => {
   try {
     const result = await pool.query(
-      'SELECT id, full_name, email, department, level, skills, bio FROM users WHERE id = $1',
+      'SELECT id, full_name, email, department, level, skills, bio, contact_info FROM users WHERE id = $1',
       [req.user.id]
     )
     res.json(result.rows[0])

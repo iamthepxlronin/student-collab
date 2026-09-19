@@ -313,8 +313,15 @@ async function checkExistingApplication() {
 
 
 // APPLY BUTTON
-function wireApplyButton() {
+function wireApplyButton(post, currentUser) {
     document.getElementById('applyBtn').addEventListener('click', async () => {
+        // Block applying if the user hasn't set their contact info
+        if (!currentUser.contact_info || !currentUser.contact_info.trim()) {
+            alert('Please add your WhatsApp number in your profile before applying, so the post owner can reach you if accepted.');
+            window.location.href = 'profile.html';
+            return;
+        }
+
         const message = document.getElementById('applyMessage').value.trim();
 
         const btn = document.getElementById('applyBtn');
@@ -343,7 +350,6 @@ function wireApplyButton() {
                 return;
             }
 
-            // Hide the form, show already-applied state
             hide('applyForm');
             show('alreadyApplied');
             document.getElementById('applicationStatus').textContent = 'pending';
