@@ -125,11 +125,10 @@ function renderPost(post, currentUser) {
         loadApplications(post);
         wireOwnerButtons(post);
     } else {
-        // Only show apply section if post is still open
         if (post.status === 'open') {
             show('applySection');
             checkExistingApplication();
-            wireApplyButton(post);
+            wireApplyButton(post, currentUser);
         }
     }
 
