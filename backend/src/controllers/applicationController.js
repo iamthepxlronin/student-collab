@@ -6,7 +6,6 @@ const applyToPost = async (req, res) => {
   const applicant_id = req.user.id
 
   try {
-    // Check if post exists
     const post = await pool.query(
       'SELECT * FROM collaboration_posts WHERE id = $1',
       [post_id]
@@ -16,12 +15,10 @@ const applyToPost = async (req, res) => {
       return res.status(404).json({ message: 'Post not found' })
     }
 
-    // Prevent applying to own post
     if (post.rows[0].user_id === applicant_id) {
       return res.status(400).json({ message: 'You cannot apply to your own post' })
     }
 
-    // Prevent duplicate applications
     const existingApplication = await pool.query(
       'SELECT * FROM applications WHERE post_id = $1 AND applicant_id = $2',
       [post_id, applicant_id]
@@ -49,7 +46,6 @@ const getApplicationsForPost = async (req, res) => {
   const post_id = req.params.id
 
   try {
-    // Make sure only the post owner can see applications
     const post = await pool.query(
       'SELECT * FROM collaboration_posts WHERE id = $1',
       [post_id]
@@ -106,7 +102,6 @@ const acceptApplication = async (req, res) => {
       [application_id]
     )
 
-    // Reveal contact info of accepted applicant
     const applicant = await pool.query(
       'SELECT full_name, email, contact_info FROM users WHERE id = $1',
       [application.rows[0].applicant_id]
@@ -156,6 +151,26 @@ const rejectApplication = async (req, res) => {
   }
 }
 
+const getMyApplications = async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT a.*, 
+              cp.title as post_title, 
+              cp.category as post_category,
+              cp.status as post_status
+       FROM applications a
+       JOIN collaboration_posts cp ON a.post_id = cp.id
+       WHERE a.applicant_id = $1
+       ORDER BY a.created_at DESC`,
+      [req.user.id]
+    )
+    res.json(result.rows)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server error' })
+  }
+}
+
 const getMyApplication = async (req, res) => {
   try {
     const result = await pool.query(
@@ -168,22 +183,6 @@ const getMyApplication = async (req, res) => {
        WHERE a.post_id = $1 AND a.applicant_id = $2`,
       [req.params.id, req.user.id]
     )
-    // Return the application if found, or null if not
-    res.json({ application: result.rows[0] || null })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Server error' })
-  }
-}
-
-const getMyApplication = async (req, res) => {
-  try {
-    const result = await pool.query(
-      `SELECT * FROM applications 
-       WHERE post_id = $1 AND applicant_id = $2`,
-      [req.params.id, req.user.id]
-    )
-    // Return the application if found, or null if not
     res.json({ application: result.rows[0] || null })
   } catch (error) {
     console.error(error)
