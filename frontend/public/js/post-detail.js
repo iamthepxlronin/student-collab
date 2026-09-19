@@ -298,6 +298,13 @@ async function checkExistingApplication() {
                 hide('applyForm');
                 show('alreadyApplied');
                 document.getElementById('applicationStatus').textContent = data.application.status;
+
+                // If accepted, reveal the post owner's contact info
+                if (data.application.status === 'accepted') {
+                    show('ownerContactReveal');
+                    document.getElementById('ownerContactInfo').textContent =
+                        data.application.owner_contact_info || 'No contact info provided';
+                }
             }
         }
     } catch (error) {
