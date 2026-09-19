@@ -1,11 +1,25 @@
 const token = requireAuth();
 
+// Fetch current user's data once on page load, so we can validate contact info before posting
+let currentUser = null;
+
+async function loadCurrentUser() {
+    try {
+        const response = await fetch('https://student-collab-production.up.railway.app/api/auth/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        currentUser = await response.json();
+    } catch (error) {
+    }
+}
+loadCurrentUser();
+
 // Skills tag system
 const skills = [];
 
 document.getElementById('skills').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-        e.preventDefault(); // stop form submission
+        e.preventDefault();
         const value = e.target.value.trim();
         if (!value || skills.includes(value)) return;
         skills.push(value);
@@ -35,10 +49,17 @@ function removeSkill(skill) {
 document.getElementById('createPostForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // Block posting if the user hasn't set their contact info
+    if (!currentUser || !currentUser.contact_info || !currentUser.contact_info.trim()) {
+        alert('Please add your WhatsApp number in your profile before posting, so applicants can reach you.');
+        window.location.href = 'profile.html';
+        return;
+    }
+
     const title = document.getElementById('title').value.trim();
     const description = document.getElementById('description').value.trim();
     const category = document.getElementById('category').value;
-    const slots_needed = 1; // default for now
+    const slots_needed = 1;
 
     if (!title) return alert('Project title is required');
     if (!description) return alert('Description is required');
@@ -69,7 +90,6 @@ document.getElementById('createPostForm').addEventListener('submit', async (e) =
             return;
         }
 
-        // Redirect to dashboard after successful post
         window.location.href = 'dashboard.html';
 
     } catch (error) {
