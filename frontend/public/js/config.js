@@ -1,1 +1,1 @@
-const API_URL = "https://student-collab-production.up.railway.app/api";
+const API_URL = "${API_BASE}";

@@ -11,7 +11,7 @@ const token = requireAuth();
 // ============================================================
 async function loadMyPosts() {
     try {
-        const response = await fetch('https://student-collab-production.up.railway.app/api/posts/my-posts', {
+        const response = await fetch(`${API_BASE}/posts/my-posts`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 

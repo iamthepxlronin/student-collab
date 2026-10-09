@@ -20,10 +20,10 @@ function hide(id) {
 async function loadPost() {
     try {
         const [postRes, userRes] = await Promise.all([
-            fetch(`https://student-collab-production.up.railway.app/api/posts/${postId}`, {
+            fetch(`${API_BASE}/posts/${postId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             }),
-            fetch('https://student-collab-production.up.railway.app/api/auth/me', {
+            fetch(`${API_BASE}/auth/me`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
         ]);
@@ -155,7 +155,7 @@ function renderPost(post, currentUser) {
 async function loadApplications(post) {
     try {
         const response = await fetch(
-            `https://student-collab-production.up.railway.app/api/applications/${postId}/applications`,
+            `${API_BASE}/applications/${postId}/applications`,
             { headers: { 'Authorization': `Bearer ${token}` } }
         );
 
@@ -232,7 +232,7 @@ function statusBadge(status) {
 async function acceptApp(appId) {
     try {
         const response = await fetch(
-            `https://student-collab-production.up.railway.app/api/applications/${appId}/accept`,
+            `${API_BASE}/applications/${appId}/accept`,
             { method: 'PATCH', headers: { 'Authorization': `Bearer ${token}` } }
         );
         if (response.ok) loadApplications();
@@ -243,7 +243,7 @@ async function acceptApp(appId) {
 async function rejectApp(appId) {
     try {
         const response = await fetch(
-            `https://student-collab-production.up.railway.app/api/applications/${appId}/reject`,
+            `${API_BASE}/applications/${appId}/reject`,
             { method: 'PATCH', headers: { 'Authorization': `Bearer ${token}` } }
         );
         if (response.ok) loadApplications();
@@ -256,7 +256,7 @@ function wireOwnerButtons(post) {
     document.getElementById('closePostBtn').addEventListener('click', async () => {
         if (!confirm('Close this project? No more applications will be accepted.')) return;
         try {
-            const response = await fetch(`https://student-collab-production.up.railway.app/api/posts/${postId}`, {
+            const response = await fetch(`${API_BASE}/posts/${postId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -272,7 +272,7 @@ function wireOwnerButtons(post) {
     document.getElementById('deletePostBtn').addEventListener('click', async () => {
         if (!confirm('Delete this project? This cannot be undone.')) return;
         try {
-            const response = await fetch(`https://student-collab-production.up.railway.app/api/posts/${postId}`, {
+            const response = await fetch(`${API_BASE}/posts/${postId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -286,7 +286,7 @@ function wireOwnerButtons(post) {
 async function checkExistingApplication() {
     try {
         const response = await fetch(
-            `https://student-collab-production.up.railway.app/api/applications/${postId}/my-application`,
+            `${API_BASE}/applications/${postId}/my-application`,
             { headers: { 'Authorization': `Bearer ${token}` } }
         );
 
@@ -329,7 +329,7 @@ function wireApplyButton(post, currentUser) {
 
         try {
             const response = await fetch(
-                `https://student-collab-production.up.railway.app/api/applications/${postId}/apply`,
+                `${API_BASE}/applications/${postId}/apply`,
                 {
                     method: 'POST',
                     headers: {

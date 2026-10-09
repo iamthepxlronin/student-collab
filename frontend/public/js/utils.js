@@ -7,6 +7,16 @@ function requireAuth() {
     return token;
 }
 
+// CONFIGURATION
+const API_BASE = 'http://localhost:5000/api';
+
+// ERROR DISPLAY HELPER
+function showError(elementId, message) {
+    const el = document.getElementById(elementId);
+    el.textContent = message;
+    el.classList.remove('hidden');
+}
+
 //LOGOUT
 function logout() {
     localStorage.removeItem('token');

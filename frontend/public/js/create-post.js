@@ -5,7 +5,7 @@ let currentUser = null;
 
 async function loadCurrentUser() {
     try {
-        const response = await fetch('https://student-collab-production.up.railway.app/api/auth/me', {
+        const response = await fetch(`${API_BASE}/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         currentUser = await response.json();
@@ -66,7 +66,7 @@ document.getElementById('createPostForm').addEventListener('submit', async (e) =
     if (!category) return alert('Please select a category');
 
     try {
-        const response = await fetch('https://student-collab-production.up.railway.app/api/posts', {
+        const response = await fetch(`${API_BASE}/posts`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -52,7 +52,7 @@
                     </div>
 
                     <!-- LOGIN FORM -->
-                    <form id="loginForm" class="space-y-4">
+                    <form id="loginForm" class="space-y-4" novalidate>
                         <!-- Email -->
                         <div class="mb-4">
                             <label for="loginEmail" class="block text-sm font-semibold text-gray-600 mb-2">
@@ -125,7 +125,7 @@
                                 id="signupName"
                                 name="fullName"
                                 class="w-full px-4 py-3 border-2 border-edge rounded-full bg-white focus:outline-none focus:border-coral transition"
-                                placeholder="Enter your full name"
+                                placeholder="Your full name"
                                 autocomplete="name"
                             >
                             <p id="signupNameError" class="text-red-500 text-xs mt-1 hidden"></p>
@@ -147,7 +147,7 @@
                             <p id="signupEmailError" class="text-red-500 text-xs mt-1 hidden"></p>
                         </div>
 
-                        <!-- Password -->
+                        <!-- Password with live strength meter -->
                         <div class="mb-4">
                             <label for="signupPassword" class="block text-sm font-semibold text-gray-600 mb-2">
                                 Password
@@ -158,7 +158,41 @@
                                     id="signupPassword"
                                     name="password"
                                     class="w-full px-4 py-3 border-2 border-edge rounded-full bg-white focus:outline-none focus:border-coral transition pr-12"
-                                    placeholder="At least 6 characters"
+                                    placeholder="At least 8 characters, with a number"
+                                    autocomplete="new-password"
+                                >
+                                <button
+                                    type="button"
+                                    id="togglePassword"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                >
+                                    <i class="fa-regular fa-eye-slash"></i>    
+                                </button>
+                            </div>
+                            <!-- Password Strength Meter (hidden initially) -->
+                            <div id="passwordMeter" class="mt-2.5 px-1 hidden">
+                                <div class="flex items-center gap-2">
+                                    <div class="h-1.5 flex-1 rounded-full bg-cream overflow-hidden" style="height: 6px">
+                                        <div id="passwordMeterBar" class="h-full w-0 transition-all duration-300"></div>
+                                    </div>
+                                    <span id="passwordMeterLabel" class="text-[11px] font-semibold text-muted w-12 text-right"></span>
+                                </div>
+                            </div>
+                            <p id="signupPasswordError" class="text-red-500 text-xs mt-1 hidden"></p>
+                        </div>
+                        
+                        <!--Confirm Password -->
+                        <div class="mb-4">
+                            <label for="confirmPassword" class="block text-sm font-semibold text-gray-600 mb-2">
+                                Confirm Password
+                            </label>
+                            <div class="relative">
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    class="w-full px-4 py-3 border-2 border-edge rounded-full bg-white focus:outline-none focus:border-coral transition pr-12"
+                                    placeholder="Re-enter your password"
                                     autocomplete="new-password"
                                 >
                                 <button
@@ -168,7 +202,7 @@
                                     <i class="fa-regular fa-eye-slash"></i>    
                                 </button>
                             </div>
-                            <p id="signupPasswordError" class="text-red-500 text-xs mt-1 hidden"></p>
+                            <p id="confirmPasswordError" class="text-red-500 text-xs mt-1 hidden"></p>
                         </div>
 
                         <!-- Department -->
@@ -195,14 +229,24 @@
                             <label for="signupSkills" class="block text-sm font-semibold text-gray-600 mb-2">
                                 Your Skills
                             </label>
-                            <input
-                                type="text"
-                                id="signupSkills"
-                                name="skills"
-                                class="w-full px-4 py-3 border-2 border-edge rounded-full bg-white focus:outline-none focus:border-coral transition"
-                                placeholder="Type a skill and press Enter"
-                            >
-                            <p id="signupSkillsError" class="text-red-500 text-xs mt-1 hidden"></p>
+                            <div class="flex gap-2">
+                                <input
+                                    type="text"
+                                    id="signupSkills"
+                                    name="skills"
+                                    class="flex-1 px-3 py-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                    placeholder="Type a skill and press Enter"
+                                >
+                                <p id="signupSkillsError" class="text-red-500 text-xs mt-1 hidden"></p>
+                                <button
+                                type="button"
+                                id="addSkillBtn"
+                                class="w-14 shrink-0 rounded-full bg-coral text-white font-bold text-xl hover:-translate-y-0.5 transition-all"
+                                >
+                                    +
+                                </button>
+                            </div>
+                            <div id="skillTags" class="flex flex-wrap gap-2 mt-2"></div>
                         </div>
 
                         <!-- Submit -->
@@ -232,7 +276,6 @@
                         Continue with Google
                     </button>
                     -->
-                    </div>
                     
 
                     <!-- FOOTER LINKS -->
@@ -251,6 +294,7 @@
                 </div>
             </div>
         </div>
+        <script src="./js/utils.js"></script>
         <script src="./js/auth.js"></script>
     </body>
 </html>

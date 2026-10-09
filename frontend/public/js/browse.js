@@ -3,7 +3,7 @@ let allPosts = [];
 
 async function loadUser() {
     try {
-        const response = await fetch('https://student-collab-production.up.railway.app/api/auth/me', {
+        const response = await fetch(`${API_BASE}/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
@@ -11,13 +11,13 @@ async function loadUser() {
         const welcomeEl = document.getElementById('welcomeName');
         if (welcomeEl) welcomeEl.textContent = data.name || data.full_name;
     } catch (error) {
-        showError('Error loading user:');
+        console.error('Error loading user:', error);
     }
 }
 
 async function loadPosts() {
     try {
-        const response = await fetch('https://student-collab-production.up.railway.app/api/posts', {
+        const response = await fetch(`${API_BASE}/posts`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();

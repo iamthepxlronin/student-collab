@@ -6,7 +6,7 @@ const token = requireAuth();
 // ============================================================
 async function loadUser() {
     try {
-        const response = await fetch('https://student-collab-production.up.railway.app/api/auth/me', {
+        const response = await fetch(`${API_BASE}/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await response.json();
@@ -28,13 +28,13 @@ async function loadUser() {
 async function loadStats() {
     try {
         const [postsRes, appsRes, allPostsRes] = await Promise.all([
-            fetch('https://student-collab-production.up.railway.app/api/posts/my-posts', {
+            fetch(`${API_BASE}/posts/my-posts`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             }),
-            fetch('https://student-collab-production.up.railway.app/api/applications/my-applications', {
+            fetch(`${API_BASE}/applications/my-applications`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             }),
-            fetch('https://student-collab-production.up.railway.app/api/posts', {
+            fetch(`${API_BASE}/posts`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
         ]);
